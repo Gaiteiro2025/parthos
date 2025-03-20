@@ -20,17 +20,27 @@ git clone https://github.com/seu-usuario/parthos-root.git
 cd parthos-root
 ```
 
-### 2. Configure as permissões do script
+### 2. Crie ou cole o Arquivo .env
+Crie um arquivo .env e cole ele na raiz do projeto. Exemplo de env para rodar local
+```bash
+DB_HOST=db
+DB_PORT=5432
+DB_USER=postgres
+DB_PASS=postgres
+DB_NAME=nestdb
+JWT_SECRET=default_secret
+```
+
+### 3. Configure as permissões do script
 ```bash
 chmod +x ./scripts/setup.sh
 ```
-
-### 3. Execute o script de setup
+### 4. Execute o script de setup
 ```bash
 ./scripts/setup.sh
 ```
 
-### 4. O ambiente será inicializado automaticamente.
+### 5. O ambiente será inicializado automaticamente.
 
 Esse script:
 - Lê o arquivo `.env` e carrega as variáveis.
