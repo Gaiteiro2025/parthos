@@ -1,50 +1,15 @@
-version: '3.8'
 
 services:
-  parthos-web:
-    image: node:16
-    container_name: parthos-web
-    working_dir: /app
+  proxy:
+    image: nginx:alpine
+    container_name: parthos-proxy
     volumes:
-      - ./parthos-web:/app
-    networks:
-      - parthos-network
-    ports:
-      - "3000:3000"
-    command: "npm start"
-
-  parthos-api:
-    image: node:16
-    container_name: parthos-api
-    working_dir: /app
-    volumes:
-      - ./parthos-api:/app
-    networks:
-      - parthos-network
-    environment:
-      - DATABASE_URL=postgres://user:password@db:5432/parthos
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "5000:5000"
-    command: "npm run start"
-
-  db:
-    image: postgres:13
-    container_name: parthos-db
     networks:
       - parthos-network
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: parthos
-    volumes:
-      - parthos-db-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
+   
 networks:
   parthos-network:
-    driver: bridge
-
-volumes:
-  parthos-db-data:
-    driver: local
+    external: true
