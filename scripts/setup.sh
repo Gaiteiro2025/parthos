@@ -31,6 +31,7 @@ fi
 # Lista de repositórios a serem clonados
 REPOS=(
   "git@github.com:$GITHUB_USER/parthos-user-api.git"
+  "git@github.com:$GITHUB_USER/parthos-task-api.git"
 )
 
 # Criar a rede Docker antes de rodar os containers
