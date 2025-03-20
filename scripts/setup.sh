@@ -1,7 +1,23 @@
 #!/bin/bash
 
-# Diretório onde o repositório parthos-infra foi clonado
+# Diretório onde o repositório Pathos foi clonado
 BASE_DIR="$(dirname "$(pwd)")"
+REPO_DIR="$(pwd)"
+
+# Carregar as variáveis do .env local de forma segura
+if [ -f "$REPO_DIR/.env" ]; then
+   export $(grep -v '^#' "$REPO_DIR/.env" | grep -E '^[A-Za-z_]+=' | xargs)
+
+else
+  echo "Aviso: .env não encontrado no diretório $REPO_DIR. Usando valores padrão."
+  DB_HOST="db"
+  DB_PORT="5432"
+  DB_USER="postgres"
+  DB_PASS="postgres"
+  DB_NAME="nestdb"
+  JWT_SECRET="default_secret2"
+fi
+
 
 # Obter o nome de usuário do GitHub configurado localmente
 GITHUB_USER=$(git config user.name)
@@ -12,14 +28,17 @@ if [ -z "$GITHUB_USER" ]; then
   exit 1
 fi
 
-# Definindo os repositórios a serem clonados, usando o nome de usuário
+# Lista de repositórios a serem clonados
 REPOS=(
-  "git@github.com:$GITHUB_USER/parthos-web.git"
-  "git@github.com:$GITHUB_USER/parthos-api.git"
+  "git@github.com:$GITHUB_USER/parthos-user-api.git"
 )
 
-# Função para clonar e instalar dependências
-clone_and_install() {
+# Criar a rede Docker antes de rodar os containers
+echo "Criando a rede Docker..."
+docker network create parthos-network || true
+
+# Função para clonar, configurar o .env e instalar dependências
+clone_and_setup() {
   local repo_url=$1
   local repo_name=$(basename $repo_url .git)
   local repo_path="$BASE_DIR/$repo_name"
@@ -38,19 +57,42 @@ clone_and_install() {
     exit 1
   fi
 
-  # Instala dependências se o repositório existir
-  echo "Instalando dependências do $repo_name..."
-  cd $repo_path
-  npm install
+  # Garante que exista um .env no repositório
+  if [ ! -f "$repo_path/.env" ]; then
+    echo "Criando .env padrão em $repo_path..."
+    echo "DB_HOST=${DB_HOST}
+DB_PORT=${DB_PORT}
+DB_USER=${DB_USER}
+DB_PASS=${DB_PASS}
+DB_NAME=${DB_NAME}
+JWT_SECRET=${JWT_SECRET}" > "$repo_path/.env"
+  else
+    echo ".env já existe em $repo_path. Pulando criação..."
+  fi
+
+  # Instala dependências se houver package.json
+  if [ -f "$repo_path/package.json" ]; then
+    echo "Instalando dependências do $repo_name..."
+    cd "$repo_path"
+    npm install
+  fi
+
+  # Subir os containers Docker do serviço
+  if [ -f "$repo_path/docker-compose.yml" ]; then
+    echo "Subindo os containers do $repo_name..."
+    docker-compose -f "$repo_path/docker-compose.yml" up -d --build
+  else
+    echo "Aviso: Nenhum docker-compose.yml encontrado em $repo_name. Pulando..."
+  fi
 }
 
-# Clona e instala as dependências para o frontend e backend
+# Clona e configura cada repositório
 for repo in "${REPOS[@]}"; do
-  clone_and_install $repo
+  clone_and_setup $repo
 done
 
-# Subir os containers Docker
-echo "Subindo os containers Docker..."
-docker-compose up -d
+# Subir os containers da infraestrutura principal
+echo "Subindo os containers da infraestrutura..."
+docker-compose -f "$REPO_DIR/docker-compose.yml" up -d --build
 
 echo "Ambiente configurado e containers iniciados!"

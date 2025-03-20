@@ -1,57 +1,37 @@
 ### Parthos - Transforme seus problemas em solução
 
-O **Parthos** é uma aplicação de gerenciamento de tarefas (To-Do List) que visa transformar a maneira como você organiza seu dia. Assim como o sábio Parthanax de Skyrim, que passou de obstáculo a aliado essencial, **Parthos** ajuda a superar o caos e trazer organização e clareza à sua rotina. A ferramenta permite criar, editar, excluir e listar tarefas, além de marcar como concluídas e filtrar por status.
-
-Com uma interface limpa e responsiva, **Parthos** proporciona uma experiência de produtividade focada e eficiente, transformando desafios em soluções. Organize sua vida com a sabedoria e eficiência de Parthos.
+O **Parthos** é uma plataforma de gestão de tarefas projetada para trazer organização e eficiência ao seu dia a dia. Com uma interface responsiva e funcionalidades intuitivas, o Parthos transforma desafios em soluções, ajudando você a manter o foco no que realmente importa.
 
 ---
 
-**Funcionalidades principais:**
-- Criação, edição e exclusão de tarefas.
+### Recursos principais:
+- Criar, editar e excluir tarefas.
 - Marcar tarefas como concluídas.
-- Filtrar tarefas por status.
-- Design responsivo para dispositivos móveis e desktop.
+- Filtragem de tarefas por status.
+- Interface responsiva e intuitiva.
 
-**Justificativa para o nome "Parthos":**
-Inspirado em Parthanax, de Skyrim, Parthos simboliza a transformação de caos em organização e o poder de superar desafios com sabedoria e foco.
+### Justificativa para o nome "Parthos":
+Inspirado em Parthanax, de Skyrim, Parthos simboliza a transformação do caos em organização e a superação de desafios com sabedoria e foco.
 
-## Estrutura do Projeto
-
-- **docker-compose.yml**: Arquivo de configuração para orquestrar containers Docker.
-- **scripts/setup.sh**: Script para automatizar a configuração do ambiente.
-- **.env**: Arquivo de variáveis de ambiente (a ser configurado com as credenciais corretas).
-- **networks/shared-network**: Configuração da rede Docker compartilhada entre os containers.
-
-## Como Rodar o Projeto
+### Como iniciar o projeto
 
 1. Clone o repositório:
-
    ```bash
-   git clone https://github.com/seu-usuario/parthos-.git
-   cd parthos-infra
+   git clone https://github.com/Gaiteiro2025/parthos.git
+   cd parthos
    ```
-2. Conceda permissão de execução ao script:
-
+2. Instale as dependências:
    ```bash
-   chmod +x ./scripts/setup.sh
+   npm install
    ```
-
-3. Execute o script de setup:
-
+3. Inicie o projeto:
    ```bash
-   ./scripts/setup.sh
+   npm run start
    ```
 
-4. Os containers serão configurados e executados automaticamente.
+### Contribuição
+Contribuições são bem-vindas! Fique à vontade para abrir issues e pull requests.
 
-## Configuração do Docker
+### Licença
+Este projeto está licenciado sob a [MIT License](LICENSE).
 
-O arquivo `docker-compose.yml` contém a configuração para os containers de frontend, backend e banco de dados PostgreSQL. Todos os containers estão conectados à mesma rede Docker.
-
-## CI/CD (Opcional)
-
-A configuração de CI/CD pode ser adicionada posteriormente, utilizando ferramentas como **GitHub Actions**, **Jenkins** ou **GitLab CI**.
-
-## Licença
-
-Este projeto é licenciado sob a [MIT License](LICENSE).
