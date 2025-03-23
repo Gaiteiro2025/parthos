@@ -1,15 +1,97 @@
+version: "3.8"
 
 services:
+  # Proxy reverso com Nginx
   proxy:
     image: nginx:alpine
     container_name: parthos-proxy
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro  
     ports:
       - "3000:3000"
     networks:
       - parthos-network
-   
+    depends_on:
+      - parthos-user-api
+      - parthos-task-api
+
+  # Banco de dados PostgreSQL
+  db:
+    image: postgres:14-alpine
+    container_name: parthos-db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - parthos-data:/var/lib/postgresql/data
+    networks:
+      - parthos-network
+    restart: always
+    ports:
+      - "${DB_PORT}:${DB_PORT}" 
+
+  # Web Service (Angular + Nginx)
+  parthos-web:
+    container_name: parthos-web
+    build:
+      context: ./parthos-web 
+    ports:
+      - "8080:80" 
+    networks:
+      - parthos-network
+    depends_on:
+      - db
+
+  # User API Service - NestJs
+  parthos-user-api:
+    container_name: parthos-user-api
+    build:
+      context: ./parthos-user-api 
+    ports:
+      - "3001:3001" 
+    volumes:
+      - ./parthos-user-api:/app
+    networks:
+      - parthos-network
+    depends_on:
+      - db
+    env_file:
+      - .env 
+    environment:
+      - HOST=proxy  # Definindo o tipo de ambiente
+    command: >
+      sh -c "
+      npm install &&
+      npm run start:dev
+      "
+
+  # Task API Service - NestJs
+  parthos-task-api:
+    container_name: parthos-task-api
+    build:
+      context: ./parthos-task-api  
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./parthos-task-api:/app
+    networks:
+      - parthos-network
+    depends_on:
+      - db
+    env_file:
+      - .env  
+    environment:
+      - HOST=proxy  # Definindo o tipo de ambiente
+    command: >
+      sh -c "
+      npm install &&
+      npm run start:dev
+      "
+
+volumes:
+  parthos-data:
+
 networks:
   parthos-network:
     external: true

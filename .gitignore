@@ -1,3 +1,9 @@
+# folder project parthos
+parthos-web/
+parthos-user-api/
+parthos-task-api/
+
+
 # Logs
 logs
 *.log
