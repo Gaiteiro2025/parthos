@@ -16,6 +16,8 @@ O **Parthos** é a infraestrutura principal para os microserviços do ecossistem
 
 ### 1. Clone o repositório
 ```bash
+mkdir parthos
+cd parthos
 git clone git@github.com:Gaiteiro2025/parthos-root.git
 cd parthos-root
 ```
