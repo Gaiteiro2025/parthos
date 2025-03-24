@@ -6,7 +6,7 @@ services:
     image: nginx:alpine
     container_name: parthos-proxy
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro  
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "3000:3000"
     networks:
@@ -29,15 +29,15 @@ services:
       - parthos-network
     restart: always
     ports:
-      - "${DB_PORT}:${DB_PORT}" 
+      - "${DB_PORT}:${DB_PORT}"
 
   # Web Service (Angular + Nginx)
   parthos-web:
     container_name: parthos-web
     build:
-      context: ./parthos-web 
+      context: ./parthos-web
     ports:
-      - "8080:80" 
+      - "8080:80"
     networks:
       - parthos-network
     depends_on:
@@ -47,9 +47,9 @@ services:
   parthos-user-api:
     container_name: parthos-user-api
     build:
-      context: ./parthos-user-api 
+      context: ./parthos-user-api
     ports:
-      - "3001:3001" 
+      - "3001:3001"
     volumes:
       - ./parthos-user-api:/app
     networks:
@@ -57,9 +57,7 @@ services:
     depends_on:
       - db
     env_file:
-      - .env 
-    environment:
-      - HOST=proxy  # Definindo o tipo de ambiente
+      - .env
     command: >
       sh -c "
       npm install &&
@@ -70,7 +68,7 @@ services:
   parthos-task-api:
     container_name: parthos-task-api
     build:
-      context: ./parthos-task-api  
+      context: ./parthos-task-api
     ports:
       - "3002:3002"
     volumes:
@@ -80,9 +78,7 @@ services:
     depends_on:
       - db
     env_file:
-      - .env  
-    environment:
-      - HOST=proxy  # Definindo o tipo de ambiente
+      - .env
     command: >
       sh -c "
       npm install &&
