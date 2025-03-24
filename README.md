@@ -59,8 +59,10 @@ A infraestrutura Parthos depende dos seguintes microserviços:
 | Nome do Serviço         | Repositório | Porta |
 |----------------------|-----------------------------------|-------|
 | Parthos Gateway     | https://github.com/Gaiteiro2025/parthos-root.git     | 3000  |
+| Parthos Web    | https://github.com/Gaiteiro2025/parthos-web.git    | 8080  |
 | Parthos User API    | https://github.com/Gaiteiro2025/parthos-user-api.git    | 3001  |
 | Parthos Task API    | https://github.com/Gaiteiro2025/parthos-task-api.git    | 3002  |
+
 
 Todos esses containers são conectados na rede `parthos-network` para comunicação interna.
 
