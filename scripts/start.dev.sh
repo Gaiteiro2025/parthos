@@ -8,12 +8,13 @@ if [ -f "$REPO_DIR/.env" ]; then
    export $(grep -v '^#' "$REPO_DIR/.env" | grep -E '^[A-Za-z_]+=' | xargs)
 else
   echo "Aviso: .env não encontrado no diretório $REPO_DIR. Usando valores padrão."
-  DB_HOST="db"
-  DB_PORT="5432"
-  DB_USER="postgres"
-  DB_PASS="postgres"
-  DB_NAME="nestdb"
-  JWT_SECRET="default_secret2"
+DB_HOST="parthos-db"
+DB_PORT="5432"
+DB_USER="postgres"
+DB_PASS="postgres"
+DB_NAME="parthosdb"
+HOST="proxy"
+JWT_SECRET="default_secret"
 fi
 
 # Obter o nome de usuário do GitHub configurado localmente
@@ -60,6 +61,7 @@ DB_PORT=${DB_PORT}
 DB_USER=${DB_USER}
 DB_PASS=${DB_PASS}
 DB_NAME=${DB_NAME}
+DB_NAME=${HOST}
 JWT_SECRET=${JWT_SECRET}" > "$repo_path/.env"
   else
     echo ".env já existe em $repo_path. Pulando criação..."
