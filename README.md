@@ -1,5 +1,11 @@
 # Parthos - Transforme seus problemas em solução
 
+[![GitHub repo size](https://img.shields.io/github/repo-size/Gaiteiro2025/parthos-root)](https://github.com/Gaiteiro2025/parthos-root)
+[![GitHub last commit](https://img.shields.io/github/last-commit/Gaiteiro2025/parthos-root)](https://github.com/Gaiteiro2025/parthos-root/commits/main)
+[![GitHub Release](https://img.shields.io/github/v/release/Gaiteiro2025/parthos-root)](https://github.com/Gaiteiro2025/parthos-root/releases)
+[![GitHub issues](https://img.shields.io/github/issues/Gaiteiro2025/parthos-root)](https://github.com/Gaiteiro2025/parthos-root/issues)
+[![GitHub license](https://img.shields.io/github/license/Gaiteiro2025/parthos-root)](https://github.com/Gaiteiro2025/parthos-root/blob/main/LICENSE)
+
 O **Parthos** é a infraestrutura principal para os microserviços do ecossistema. Ele orquestra os containers, gerencia a rede Docker e garante que todos os serviços funcionem corretamente.
 
 ## Estrutura do Projeto
@@ -14,17 +20,15 @@ O **Parthos** é a infraestrutura principal para os microserviços do ecossistem
 
 ## Como Rodar o Projeto
 
-### 1. Clone o repositório
-```bash
-mkdir parthos
-cd parthos
+### 1. Clone o Repositório
+```sh
 git clone git@github.com:Gaiteiro2025/parthos-root.git
 cd parthos-root
 ```
 
-### 2. Crie ou cole o Arquivo .env
-Crie um arquivo .env e cole ele na raiz do projeto. Exemplo de env para rodar local
-```bash
+### 2. Crie ou Cole o Arquivo .env
+Crie um arquivo .env e cole ele na raiz do projeto. Exemplo de env para rodar local:
+```sh
 DB_HOST=db
 DB_PORT=5432
 DB_USER=postgres
@@ -33,17 +37,17 @@ DB_NAME=nestdb
 JWT_SECRET=default_secret
 ```
 
-### 3. Configure as permissões do script
-```bash
+### 3. Configure as Permissões do Script
+```sh
 chmod +x ./scripts/setup.sh
 ```
-### 4. Execute o script de setup
-```bash
+
+### 4. Execute o Script de Setup
+```sh
 ./scripts/setup.sh
 ```
 
 ### 5. O ambiente será inicializado automaticamente.
-
 Esse script:
 - Lê o arquivo `.env` e carrega as variáveis.
 - Clona os repositórios dependentes.
@@ -58,11 +62,10 @@ A infraestrutura Parthos depende dos seguintes microserviços:
 
 | Nome do Serviço         | Repositório | Porta |
 |----------------------|-----------------------------------|-------|
-| Parthos Gateway     | https://github.com/Gaiteiro2025/parthos-root.git     | 3000  |
-| Parthos Web    | https://github.com/Gaiteiro2025/parthos-web.git    | 8080  |
-| Parthos User API    | https://github.com/Gaiteiro2025/parthos-user-api.git    | 3001  |
-| Parthos Task API    | https://github.com/Gaiteiro2025/parthos-task-api.git    | 3002  |
-
+| Parthos Gateway     | [Parthos Root](https://github.com/Gaiteiro2025/parthos-root) | 3000  |
+| Parthos Web    | [Parthos Web](https://github.com/Gaiteiro2025/parthos-web) | 8080  |
+| Parthos User API    | [Parthos User API](https://github.com/Gaiteiro2025/parthos-user-api) | 3001  |
+| Parthos Task API    | [Parthos Task API](https://github.com/Gaiteiro2025/parthos-task-api) | 3002  |
 
 Todos esses containers são conectados na rede `parthos-network` para comunicação interna.
 
@@ -102,5 +105,5 @@ A configuração de CI/CD pode ser adicionada posteriormente, utilizando ferrame
 
 ## Licença
 
-Este projeto é licenciado sob a [MIT License](LICENSE).
+Este projeto está sob a **licença MIT**. Veja o arquivo [LICENSE](https://github.com/Gaiteiro2025/parthos-root/blob/main/LICENSE) para mais detalhes.
 
